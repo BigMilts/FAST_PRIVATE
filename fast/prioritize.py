@@ -21,7 +21,7 @@ import os
 
 import fast
 
-usage = """USAGE: python py/prioritize.py <dataset> <entity> <algorithm> <repetitions>
+usage = """USAGE: python fast/prioritize.fast <dataset> <entity> <algorithm> <repetitions>
 OPTIONS:
   <dataset>: test suite to prioritize.
     options: flex_v3, grep_v3, gzip_v1, make_v1, sed_v6, closure_v0, lang_v0, math_v0, chart_v0, time_v0
@@ -40,7 +40,6 @@ def bbox_prioritization(name, k, r, b, repeats, test_cases1):
     java_flag = True
     if name == "FAST-pw":
         for run in range(repeats):
-            # print(" Run", run + 1)
             if java_flag:
                 prioritization = fast.fast_pw(
                     test_cases1, r, b, bbox=True, k=k)
@@ -49,8 +48,6 @@ def bbox_prioritization(name, k, r, b, repeats, test_cases1):
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Getting Test cases from java files
-
-
 def get_all_java_test_files():
     """
      Gets all java test path in the repository
@@ -62,9 +59,6 @@ def get_all_java_test_files():
 
 
 def compact_files(tests_directories):
-    """
-     Compacts a
-    """
     test_suites = []
     for testSuite in tests_directories:
         test_suites.append(minify_test_class(testSuite))
@@ -94,12 +88,6 @@ def write_results(results):
     string_result = ''
     for result in results:
         string_result += result + "\n"
-
-    # Writning the results locally
-    # file = open("../output/results.txt", 'w')
-    # for result in results:
-    #     file.write(result)
-    #     file.write("\n")
     print(string_result)
 
 

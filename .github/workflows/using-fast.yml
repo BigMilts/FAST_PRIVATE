@@ -14,7 +14,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: RUN FAST
-        run: python py/prioritize.py > results.txt
+        run: python fast/prioritize.fast > results.txt
       - name: setup git config
         run: |
           git config user.name "FAST ACTION"
