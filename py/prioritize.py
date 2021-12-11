@@ -18,7 +18,6 @@ along with this source.  If not, see <http://www.gnu.org/licenses/>.
 
 import glob
 import os
-from git import Repo
 
 import fast
 
