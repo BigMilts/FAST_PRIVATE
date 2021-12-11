@@ -19,16 +19,12 @@ jobs:
           pip install -r requirements.txt
       - name: RUN FAST
         run: python py/prioritize.py
-#      - name: Checkout repository
-#        uses: actions/checkout@v2
-#      - name: Commit files
-#        run: |
-#          cd ../
-#          git config --local user.name  ${{ github.actor }}
-#          git add ./output
-#          git commit -m "persisting tests results"
-#      - name: Push changes
-#        uses: ad-m/github-push-action@master
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          force: true
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+      - name: commit
+        run: |
+          git add .
+          git commit -m "persisting test data"
+          git push origin master
