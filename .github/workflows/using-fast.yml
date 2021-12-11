@@ -4,7 +4,7 @@ on:
     branches: ['main']
 
 jobs:
-  hello_world_job:
+  private_fast_action:
     runs-on: ubuntu-latest
     name: Giving test class names
     steps:
@@ -14,13 +14,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: RUN FAST
-        run: python py/prioritize.py > test.txt
+        run: python py/prioritize.py > results.txt
       - name: setup git config
         run: |
           git config user.name "FAST ACTION"
           git config user.email "<>"
       - name: commit
         run: |
-          git add test.txt
+          git add results.txt
           git commit -m "persisting test data"
           git push origin main
