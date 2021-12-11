@@ -1,9 +1,12 @@
-name: Private Fast action
+name: <Your action name>
+
+# Configure the action trigger as you wish for your pipelines
 on:
   push:
     branches: ['main']
 
 jobs:
+  # Add this job at your jobs block
   private_fast_action:
     runs-on: ubuntu-latest
     name: Setup
