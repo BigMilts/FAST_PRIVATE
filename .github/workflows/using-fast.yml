@@ -19,7 +19,6 @@ jobs:
           pip install -r requirements.txt
       - name: RUN FAST
         run: python py/prioritize.py > test.txt
-      - uses: actions/checkout@v2
       - name: setup git config
         run: |
           git config user.name "GitHub Actions Bot"
