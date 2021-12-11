@@ -15,6 +15,7 @@ GitHub Actions is a continuous integration and continuous delivery (CI/CD) platf
 
 ### The Fast Action
 This action use the FAST project to to the priorization technique in whatever Junit project on a github repository.
+The fast project has different algorithms and parameters. In this action fast will be running usins "FAST-PW" and will use the blackbox configuration, since in this action the fast will have access to the source code
 
 ### How it works ?
 Basically, the action works following these steps:
@@ -114,8 +115,6 @@ This is the root directory of the repository. The directory is structured as fol
      |
      |--- workflow_tempalte/        Holds the fast action template to be used in the others .yml files
      
-
-
  ## *Colaborators in the development of this action*
 
 <table>
