@@ -1,0 +1,21 @@
+name: Private Fast action
+on: [push, pull_request]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Giving test class names
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: RUN FAST
+        run: python py/prioritize.py
+       
+#https://github.com/STAR-RG/shaker
