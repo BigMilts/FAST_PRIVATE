@@ -17,5 +17,9 @@ jobs:
           pip install -r requirements.txt
       - name: RUN FAST
         run: python py/prioritize.py
-      - name: write results
-        run: echo Hello World! > hello-world.txt
+      - name: Commit files
+        run: |
+          cd ..
+          git config --local user.name  ${{ github.actor }}
+          git add ./output
+          git commit -m "persisting tests results"
