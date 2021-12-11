@@ -83,7 +83,7 @@ def fast_pw(test_cases1, r, b, bbox=False, k=5, B=0):
     # First TC
 
     selected_tcs_minhash = lsh.tc_minhashing((0, set()), hashes)
-    if(len(test_cases1) > 0):
+    if len(test_cases1) > 0:
         first_tc = random.choice(list(tcs_minhashes.keys()))
         for i in range(n):
             if tcs_minhashes[first_tc][i] < selected_tcs_minhash[i]:
