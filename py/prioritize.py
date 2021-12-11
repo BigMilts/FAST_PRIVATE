@@ -17,6 +17,7 @@ along with this source.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 import glob
+import os
 
 import fast
 
@@ -87,6 +88,9 @@ def get_test_class_number(tests_directories):
 
 
 def write_results(results):
+    directory = "../output"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     file = open("../output/results.txt", 'w')
     for result in results:
         file.write(result)
