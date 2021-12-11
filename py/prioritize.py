@@ -35,14 +35,14 @@ NOTE:
   ART-D, ART-F, GT, GA, GA-S are WB prioritization only."""
 
 
-def bbox_prioritization(name, prog, v, ctype, k, n, r, b, repeats, selsize, test_cases1):
+def bbox_prioritization(name, k, r, b, repeats, test_cases1):
     java_flag = True
     if name == "FAST-pw":
         for run in range(repeats):
             print(" Run", run + 1)
             if java_flag:
                 prioritization = fast.fast_pw(
-                    test_cases1, r, b, bbox=True, k=k, memory=False)
+                    test_cases1, r, b, bbox=True, k=k)
             return prioritization
 
 
@@ -86,6 +86,13 @@ def get_test_class_number(tests_directories):
     return classes
 
 
+def write_results(results):
+    file = open("../output/results.txt", 'w')
+    for result in results:
+        file.write(result)
+        file.write("\n")
+
+
 if __name__ == "__main__":
     files_paths = get_all_java_test_files()
     test_classes_order = get_test_class_number(files_paths)
@@ -99,18 +106,13 @@ if __name__ == "__main__":
     entities = {"bbox", "function", "branch", "line"}
 
     # FAST parameters
-    k, n, r, b = 5, 10, 1, 10
-
-
-    def pw(x):
-        pass
-    selsize = pw
+    k, r, b = 5, 1, 10
 
     priorizated_tests = bbox_prioritization(
-        algname, '', '', entity, k, n, r, b, repeats, selsize
-        , processed_test_cases)
+        algname, k, r, b, repeats, processed_test_cases)
 
     tests_post_priorization = []
     for priorizated_test in priorizated_tests:
         tests_post_priorization.append(test_classes_order[priorizated_test])
     print(tests_post_priorization)
+    write_results(tests_post_priorization)

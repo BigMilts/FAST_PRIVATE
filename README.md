@@ -72,29 +72,3 @@ In order to replicate the experiment follow these steps:
  
       To display all argument options simply run `python py/scalability.py`.
 
-### Clean preprocessed input files
-
- 1. Run the script `clean-preprocessed-input.py` to clean preprocessed input files for repeating the experiment in a clean environment.
- 
-    - `python tools/clean-preprocessed-input.py`
-
-
-Directory Structure
----------------
-This is the root directory of the repository. The directory is structured as follows:
-
-    FAST
-     .
-     |
-     |--- input/         Input of the algorithms, i.e. fault matrix, coverage information, and BB representation of subjects.
-     |
-     |--- output/        Raw output data of the experiments execution.
-     |
-     |--- py/            Implementation of the algorithms and scripts to execute the experiments.
-     |
-     |--- results/       Overview of the experiment results and related data
-     |
-     |--- scalability/   Input, output, and plots for the scalability experiment.
-     |
-     |--- tools/         Util scripts, e.g. clean environment, plot results, generate scalability input.
-  

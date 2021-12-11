@@ -1,0 +1,5 @@
+../sillySamples/exemploTest.java
+../sillySamples/ItemServiceTest.java
+../sillySamples/SampleTest.java
+../sillySamples/RateServiceTest.java
+../sillySamples/CustomerServiceTest.java

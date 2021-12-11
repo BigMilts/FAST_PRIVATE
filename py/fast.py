@@ -50,7 +50,7 @@ def get_signatures(test_cases, hashes, bbox=False, k=5):
 
 
 # lsh + pairwise comparison with candidate set
-def fast_pw(test_cases1, r, b, bbox=False, k=5, memory=False, B=0):
+def fast_pw(test_cases1, r, b, bbox=False, k=5, B=0):
     """INPUT
     (list): compacted files
     (int)r: number of rows
