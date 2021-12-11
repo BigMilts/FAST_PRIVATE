@@ -17,3 +17,5 @@ jobs:
           pip install -r requirements.txt
       - name: RUN FAST
         run: python py/prioritize.py
+      - name: write results
+        run: echo Hello World! > hello-world.txt
