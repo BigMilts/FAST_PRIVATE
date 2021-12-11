@@ -18,7 +18,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: RUN FAST
-        run: python py/prioritize.py
+        run: python py/prioritize.py > test.txt
       - uses: actions/checkout@v2
       - name: setup git config
         run: |
@@ -26,6 +26,6 @@ jobs:
           git config user.email "<>"
       - name: commit
         run: |
-          git add /home/runner/work/FAST_PRIVATE/FAST_PRIVATE/output/results.txt
+          git add test.txt
           git commit -m "persisting test data"
           git push origin main

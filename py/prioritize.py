@@ -96,6 +96,8 @@ def write_results(results):
     for result in results:
         file.write(result)
         file.write("\n")
+    file = open("../output/results.txt", 'w')
+    return file.read()
 
 
 if __name__ == "__main__":
