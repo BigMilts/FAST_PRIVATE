@@ -83,60 +83,63 @@ def fast_pw(test_cases1, r, b, bbox=False, k=5, B=0):
     # First TC
 
     selected_tcs_minhash = lsh.tc_minhashing((0, set()), hashes)
-    first_tc = random.choice(list(tcs_minhashes.keys()))
-    for i in range(n):
-        if tcs_minhashes[first_tc][i] < selected_tcs_minhash[i]:
-            selected_tcs_minhash[i] = tcs_minhashes[first_tc][i]
-    prioritized_tcs.append(first_tc)
-    tcs -= set([first_tc])
-    del tcs_minhashes[first_tc]
+    if(len(test_cases1) > 0):
+        first_tc = random.choice(list(tcs_minhashes.keys()))
+        for i in range(n):
+            if tcs_minhashes[first_tc][i] < selected_tcs_minhash[i]:
+                selected_tcs_minhash[i] = tcs_minhashes[first_tc][i]
+        prioritized_tcs.append(first_tc)
+        tcs -= set([first_tc])
+        del tcs_minhashes[first_tc]
 
-    iteration, total = 0, float(len(tcs_minhashes))
-    while len(tcs_minhashes) > 0:
-        iteration += 1
-        if iteration % 100 == 0:
-            sys.stdout.write("  Progress: {}%\r".format(
-                round(100*iteration/total, 2)))
-            sys.stdout.flush()
+        iteration, total = 0, float(len(tcs_minhashes))
+        while len(tcs_minhashes) > 0:
+            iteration += 1
+            if iteration % 100 == 0:
+                sys.stdout.write("  Progress: {}%\r".format(
+                    round(100*iteration/total, 2)))
+                sys.stdout.flush()
 
-        if len(tcs_minhashes) < SIZE:
-            bucket = lsh.lsh_bucket(tcs_minhashes.items(), b, r, n)
-            SIZE = int(SIZE*BASE) + 1
+            if len(tcs_minhashes) < SIZE:
+                bucket = lsh.lsh_bucket(tcs_minhashes.items(), b, r, n)
+                SIZE = int(SIZE*BASE) + 1
 
-        sim_cand = lsh.lsh_candidates(bucket, (0, selected_tcs_minhash),
-                                      b, r, n)
-        filtered_sim_cand = sim_cand.difference(prioritized_tcs)
-        candidates = tcs - filtered_sim_cand
-
-        if len(candidates) == 0:
-            selected_tcs_minhash = lsh.tc_minhashing((0, set()), hashes)
             sim_cand = lsh.lsh_candidates(bucket, (0, selected_tcs_minhash),
                                           b, r, n)
             filtered_sim_cand = sim_cand.difference(prioritized_tcs)
             candidates = tcs - filtered_sim_cand
+
             if len(candidates) == 0:
-                candidates = tcs_minhashes.keys()
+                selected_tcs_minhash = lsh.tc_minhashing((0, set()), hashes)
+                sim_cand = lsh.lsh_candidates(bucket, (0, selected_tcs_minhash),
+                                              b, r, n)
+                filtered_sim_cand = sim_cand.difference(prioritized_tcs)
+                candidates = tcs - filtered_sim_cand
+                if len(candidates) == 0:
+                    candidates = tcs_minhashes.keys()
 
-        selected_tc, max_dist = random.choice(tuple(candidates)), -1
-        for candidate in tcs_minhashes:
-            if candidate in candidates:
-                dist = lsh.j_distance_estimate(
-                    selected_tcs_minhash, tcs_minhashes[candidate])
-                if dist > max_dist:
-                    selected_tc, max_dist = candidate, dist
+            selected_tc, max_dist = random.choice(tuple(candidates)), -1
+            for candidate in tcs_minhashes:
+                if candidate in candidates:
+                    dist = lsh.j_distance_estimate(
+                        selected_tcs_minhash, tcs_minhashes[candidate])
+                    if dist > max_dist:
+                        selected_tc, max_dist = candidate, dist
 
-        for i in range(n):
-            if tcs_minhashes[selected_tc][i] < selected_tcs_minhash[i]:
-                selected_tcs_minhash[i] = tcs_minhashes[selected_tc][i]
+            for i in range(n):
+                if tcs_minhashes[selected_tc][i] < selected_tcs_minhash[i]:
+                    selected_tcs_minhash[i] = tcs_minhashes[selected_tc][i]
 
-        prioritized_tcs.append(selected_tc)
+            prioritized_tcs.append(selected_tc)
 
-        # select budget B
-        if len(prioritized_tcs) >= B+1:
-            break
+            # select budget B
+            if len(prioritized_tcs) >= B+1:
+                break
 
-        tcs -= set([selected_tc])
-        del tcs_minhashes[selected_tc]
+            tcs -= set([selected_tc])
+            del tcs_minhashes[selected_tc]
 
-    prioritized_tcs.remove(0)
-    return prioritized_tcs
+        prioritized_tcs.remove(0)
+        return prioritized_tcs
+    else:
+        print("No java test files in this repository")

@@ -112,7 +112,8 @@ if __name__ == "__main__":
         algname, k, r, b, repeats, processed_test_cases)
 
     tests_post_priorization = []
-    for priorizated_test in priorizated_tests:
-        tests_post_priorization.append(test_classes_order[priorizated_test])
-    print(tests_post_priorization)
-    write_results(tests_post_priorization)
+    if priorizated_tests is not None:
+        for priorizated_test in priorizated_tests:
+            tests_post_priorization.append(test_classes_order[priorizated_test])
+        print(tests_post_priorization)
+        write_results(tests_post_priorization)
