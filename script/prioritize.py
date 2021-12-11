@@ -21,7 +21,7 @@ import os
 
 import fast
 
-usage = """USAGE: python fast/prioritize.fast <dataset> <entity> <algorithm> <repetitions>
+usage = """USAGE: python script/prioritize.script <dataset> <entity> <algorithm> <repetitions>
 OPTIONS:
   <dataset>: test suite to prioritize.
     options: flex_v3, grep_v3, gzip_v1, make_v1, sed_v6, closure_v0, lang_v0, math_v0, chart_v0, time_v0
