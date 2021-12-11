@@ -1,37 +1,128 @@
-## Welcome to GitHub Pages
+# Fast github action
 
-You can use the [editor on GitHub](https://github.com/BigMilts/FAST_PRIVATE/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+### FAST Approaches to Scalable Similarity-based Test Case Prioritization
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This repository is a "fork" of https://github.com/brenomiranda/FAST.
+Fast is a tool which does test case priorizations. Given a test suitethe tool will do a priorization  by pairwise and return the test suite ordered by the algorithm
 
-### Markdown
+### FAST publication
+> Breno Miranda, Emilio Cruciani, Roberto Verdecchia, and Antonia Bertolino. 2018. FAST Approaches to Scalable Similarity-based Test Case Prioritization. In *Proceedings of ICSE’18: 40th International Conference on Software Engineering, Gothenburg, Sweden, May 27-June 3, 2018 (ICSE’18)*, 11 pages. DOI: [10.1145/3180155.3180210](http://dx.doi.org/10.1145/3180155.3180210)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Github action
+
+GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.
+
+
+### The Fast Action
+This action use the FAST project to to the priorization technique in whatever Junit project on a github repository.
+
+### How it works ?
+Basically, the action works following these steps:
+    * Gets all java test files with the patter **Test.java and **_Test.java
+    * Minify the collected classes into a one line
+    * Send the processed classes to Fast
+    * The action will write the ordered classes into **results.txt** at the root of the repository
+
+### Getting started
+
+1 -  Get the release to yout machine [download release](https://github.com/BigMilts/FAST_PRIVATE/archive/refs/tags/fast_action_v1.tar.gz)
+2 -  Extract the .zip
+3 -  Copy the *script* folder to your repository and put in the root
+4 -  If you already have a workflow .yml file configurated on your project, you just need to add the job in the jobs tag
+```markdown
+jobs:
+  #job1:
+    # stpes...
+  #job2:
+    #steps...
+  # Add this *private_fast_action job block at your jobs block
+  private_fast_action:
+    runs-on: ubuntu-latest
+    name: Setup
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install scipy xxhash
+      - name: RUN FAST
+        run: python script/prioritize.py > results.txt
+      - name: Setup git
+        run: |
+          git config user.name "FAST ACTION"
+          git config user.email "<>"
+      - name: Commit
+        run: |
+          git add results.txt
+          git commit -m "persisting test data"
+          git push origin mai
+```
+Nevertheless, if don't, you will need to create a folder a filte with this pattern: **.github/workflows/<your_action_name>.yml**. Then, you must put in the file
 
 ```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+# This is a sample of action, if youi need more information, consult the 
+https://docs.github.com/pt/actions/quickstart
 
-- Bulleted
-- List
+name: Private Fast action
+on:
+  # define the event which will trigger the action
+  push:
+  # define the branch which you want the job to run
+    branches: ['main']
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+jobs:
+  private_fast_action:
+    runs-on: ubuntu-latest
+    name: Setup
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install scipy xxhash
+      - name: RUN FAST
+        run: python script/prioritize.py > results.txt
+      - name: Setup git
+        run: |
+          git config user.name "FAST ACTION"
+          git config user.email "<>"
+      - name: Commit
+        run: |
+          git add results.txt
+          git commit -m "commit messsage"
+          git push origin main
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
 
-### Jekyll Themes
+### Expected Restuls
+There are 2 possibles results in the generated **results.txt** file.
+1 - The content will be the test classes name ordered by Fast, in case the tests are following the Junit name convention.
+2 - The content will be "No java test files in this repository" if there is no Junit java test files in your repository or it may happen if the files are not in the Junit name pattern.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/BigMilts/FAST_PRIVATE/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+Directory Structure
+---------------
+This is the root directory of the repository. The directory is structured as follows:
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+    FAST_PRIVATE
+     .
+     |
+     |--- .github/workflows/        Holds this repository action.
+     |
+     |--- script/                   Implementation of the algorithms and scripts to execute the action.
+     |
+     |--- workflow_tempalte/        Holds the fast action template to be used in the others .yml files
+     
+
+
+ ## *Colaborators in the development of this action*
+
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/mam81"><img src="https://avatars.githubusercontent.com/u/49957062?v=4" width="100px;" alt="Matheus Antunes"/><br /><sub><b>Matheus Antunes</b></sub></a><br /><a href="https://github.com/mam81"title="Frontend">
+    <td align="center"><a href="https://github.com/BigMilts"><img src="https://avatars.githubusercontent.com/u/51926931?v=4" width="100px;" alt="Milton Souto Maior"/><br /><sub><b>Milton Souto Maior</b></sub></a><br /><a href="https://github.com/BigMilts"title="Fullstack">
+	<td align="center"><a href="https://github.com/RafaelNAIP"><img src="https://avatars.githubusercontent.com/u/51056390?v=4" width="100px;" alt="Rafael Dias"/><br /><sub><b>Rafael Dias</b></sub></a><br /><a href="https://github.com/RafaelNAIP"title="Frontend">
+    <td align="center"><a href="https://github.com/vitorlms"><img src="https://avatars.githubusercontent.com/u/54985552?v=4" width="100px;" alt="Vítor Lopes"/><br /><sub><b>Vítor Lopes</b></sub></a><br /><a href="https://github.com/vitorlms"title="Frontend"></
+  </tr>
+</table>
