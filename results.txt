@@ -1,7 +1,7 @@
-sillySamples/RateServiceTest.java
-sillySamples/sillyTest.java
 sillySamples/ItemServiceTest.java
-sillySamples/CustomerServiceTest.java
 sillySamples/SampleTest.java
+sillySamples/sillyTest.java
+sillySamples/RateServiceTest.java
 sillySamples/exemploTest.java
+sillySamples/CustomerServiceTest.java
 
