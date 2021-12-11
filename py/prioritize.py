@@ -18,6 +18,7 @@ along with this source.  If not, see <http://www.gnu.org/licenses/>.
 
 import glob
 import os
+from git import Repo
 
 import fast
 
@@ -92,10 +93,14 @@ def write_results(results):
     print(os.path)
     if not os.path.exists(directory):
         os.makedirs(directory)
+    repo = Repo.init(directory).git
+    index = Repo.init(directory).index
     file = open("../output/results.txt", 'w')
     for result in results:
         file.write(result)
         file.write("\n")
+    repo.add(file)
+    index.commit("Persisting data")
 
 
 if __name__ == "__main__":
