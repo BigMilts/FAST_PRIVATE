@@ -89,6 +89,7 @@ def get_test_class_number(tests_directories):
 
 def write_results(results):
     directory = "../output"
+    print(os.path)
     if not os.path.exists(directory):
         os.makedirs(directory)
     file = open("../output/results.txt", 'w')
