@@ -2,7 +2,6 @@ name: Private Fast action
 on:
   push:
     branches: ['main']
-    paths: ['output/**', 'py/**']
 
 jobs:
   hello_world_job:
