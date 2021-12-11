@@ -40,7 +40,7 @@ def bbox_prioritization(name, k, r, b, repeats, test_cases1):
     java_flag = True
     if name == "FAST-pw":
         for run in range(repeats):
-            print(" Run", run + 1)
+            # print(" Run", run + 1)
             if java_flag:
                 prioritization = fast.fast_pw(
                     test_cases1, r, b, bbox=True, k=k)
@@ -56,8 +56,8 @@ def get_all_java_test_files():
      Gets all java test path in the repository
     """
     files = []
-    files += glob.glob('../**/*Test*.java', recursive=True)
-    files += glob.glob('../**/*__*Test*.java', recursive=True)
+    files += glob.glob('**/*Test*.java', recursive=True)
+    files += glob.glob('**/*__*Test*.java', recursive=True)
     return files
 
 
@@ -89,15 +89,18 @@ def get_test_class_number(tests_directories):
 
 def write_results(results):
     directory = "../output"
-    print(os.path)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    file = open("../output/results.txt", 'w')
+    string_result = ''
     for result in results:
-        file.write(result)
-        file.write("\n")
-    file = open("../output/results.txt", 'w')
-    return file.read()
+        string_result += result + "\n"
+
+    # Writning the results locally
+    # file = open("../output/results.txt", 'w')
+    # for result in results:
+    #     file.write(result)
+    #     file.write("\n")
+    print(string_result)
 
 
 if __name__ == "__main__":
@@ -122,5 +125,4 @@ if __name__ == "__main__":
     if priorizated_tests is not None:
         for priorizated_test in priorizated_tests:
             tests_post_priorization.append(test_classes_order[priorizated_test])
-        print(tests_post_priorization)
         write_results(tests_post_priorization)
