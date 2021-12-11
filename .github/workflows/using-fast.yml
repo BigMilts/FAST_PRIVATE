@@ -19,7 +19,12 @@ jobs:
         run: python py/prioritize.py
       - name: Commit files
         run: |
-          cd ..
+          cd ../
           git config --local user.name  ${{ github.actor }}
           git add ./output
           git commit -m "persisting tests results"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
