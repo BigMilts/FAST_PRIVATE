@@ -1,7 +1,7 @@
 name: Private Fast action
 on:
   push:
-    branches: ['master']
+    branches: ['main']
     paths: ['output/**', 'py/**']
 
 jobs:
