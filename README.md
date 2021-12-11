@@ -1,74 +1,127 @@
-# FAST Approaches to Scalable Similarity-based Test Case Prioritization
+# Fast github action
 
-This repository is a companion page for the following publication:
+### FAST Approaches to Scalable Similarity-based Test Case Prioritization
 
+This repository is a "fork" of https://github.com/brenomiranda/FAST.
+Fast is a tool which does test case priorizations. Given a test suitethe tool will do a priorization  by pairwise and return the test suite ordered by the algorithm
+
+### FAST publication
 > Breno Miranda, Emilio Cruciani, Roberto Verdecchia, and Antonia Bertolino. 2018. FAST Approaches to Scalable Similarity-based Test Case Prioritization. In *Proceedings of ICSE’18: 40th International Conference on Software Engineering, Gothenburg, Sweden, May 27-June 3, 2018 (ICSE’18)*, 11 pages. DOI: [10.1145/3180155.3180210](http://dx.doi.org/10.1145/3180155.3180210)
 
-It contains all the material required for replicating our experiments, including: the implementation of the algorithms, the input data, and supplementary tools. 
-Some additional results, not included in the paper for the sake of space, are also provided.
+### Github action
+
+GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.
 
 
-Experiment Results and Data
----------------
-The results of our experiments as well as the data we used for our statistical analysis are available [here](results/README.md).
+### The Fast Action
+This action use the FAST project to to the priorization technique in whatever Junit project on a github repository.
+The fast project has different algorithms and parameters. In this action fast will be running usins "FAST-PW" and will use the blackbox configuration, since in this action the fast will have access to the source code
 
- 
-Experiment Replication
----------------
-In order to replicate the experiment follow these steps:
+### How it works ?
+Basically, the action works following these steps:
+    * Gets all java test files with the patter **Test.java and **_Test.java
+    * Minify the collected classes into a one line
+    * Send the processed classes to Fast
+    * The action will write the ordered classes into **results.txt** at the root of the repository
 
 ### Getting started
 
-1. Clone the repository 
-   - `git clone https://github.com/icse18-FAST/FAST/`
- 
-2. Install the additional python packages required:
-   - `pip install -r requirements.txt`
+1 -  Get the release to yout machine [download release](https://github.com/BigMilts/FAST_PRIVATE/archive/refs/tags/fast_action_v1.tar.gz)
+2 -  Extract the .zip
+3 -  Copy the *script* folder to your repository and put in the root
+4 -  If you already have a workflow .yml file configurated on your project, you just need to add the job in the jobs tag
+```markdown
+jobs:
+  #job1:
+    # stpes...
+  #job2:
+    #steps...
+  # Add this *private_fast_action job block at your jobs block
+  private_fast_action:
+    runs-on: ubuntu-latest
+    name: Setup
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install scipy xxhash
+      - name: RUN FAST
+        run: python script/prioritize.py > results.txt
+      - name: Setup git
+        run: |
+          git config user.name "FAST ACTION"
+          git config user.email "<>"
+      - name: Commit
+        run: |
+          git add results.txt
+          git commit -m "persisting test data"
+          git push origin mai
+```
+Nevertheless, if don't, you will need to create a folder a filte with this pattern: **.github/workflows/<your_action_name>.yml**. Then, you must put in the file
 
-### Evaluate the Effectiveness and Efficiency of different test case prioritization (TCP) algorithms
+```markdown
 
-1. Execute the `prioritize.py` script 
-   - `python py/prioritize.py <subject> <entity> <algorithm> <repetitions>`
-   
-      Example: `python py/prioritize.py flex_v3 bbox FAST-pw 50`
-      
-      The possible values for `<subject>` are: flex_v3, grep_v3, gzip_v1, make_v1, sed_v6, chart_v0, closure_v0, lang_v0, math_v0, and time_v0.
- 
-      The possible values for `<entity>` are: function, line, and branch, for white-box approaches; and bbox, for black-box TCP.
-      
-      The possible values for `<algorithm>` are: FAST-pw, FAST-one, FAST-log, FAST-sqrt, FAST-all, GT, GA, GA-S, ART-F, ART-D, STR, and I-TSD. Notice that while the FAST-* algorithms can be applied to both white-box and black-box TCP, GT, GA, GA-S, ART-F, and ART-D, are white-box only; STR and I-TSD are black-box only.
+# This is a sample of action, if youi need more information, consult the 
+https://docs.github.com/pt/actions/quickstart
 
-2. View output results stored in folder `output/`
+name: Private Fast action
+on:
+  # define the event which will trigger the action
+  push:
+  # define the branch which you want the job to run
+    branches: ['main']
 
-### Evaluate the Scalability of different TCP approaches
+jobs:
+  private_fast_action:
+    runs-on: ubuntu-latest
+    name: Setup
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install scipy xxhash
+      - name: RUN FAST
+        run: python script/prioritize.py > results.txt
+      - name: Setup git
+        run: |
+          git config user.name "FAST ACTION"
+          git config user.email "<>"
+      - name: Commit
+        run: |
+          git add results.txt
+          git commit -m "commit messsage"
+          git push origin main
+```
 
-1. Run the script  `generate-scalability-input.py` to generate the input testset for the algorithms
-   - `python tools/generate-scalability-input.py <test_suite_size> <test_case_size>`
 
-      The argument `<test_suite_size>` accepts any arbitrary integer, while `<test_case_size>` accepts three different sizes for a test case representation: *small*, *medium*, and *large*. *Small* for an average length of 100, *medium* for 1K, and *large* for 10K elements. In all three cases, we allow for a variance of ±25%.
+### Expected Restuls
+There are 2 possibles results in the generated **results.txt** file.
+1 - The content will be the test classes name ordered by Fast, in case the tests are following the Junit name convention.
+2 - The content will be "No java test files in this repository" if there is no Junit java test files in your repository or it may happen if the files are not in the Junit name pattern.
 
-      For example, the command: `python tools/generate-scalability-input.py 1000 small` generates a test suite containing 1000 *small* test cases.
 
-      To display all argument options simply run the script without arguments (i.e. `python tools/generate-scalability-input.py`).
+Directory Structure
+---------------
+This is the root directory of the repository. The directory is structured as follows:
 
-2. Run the script `scalability.py` to measure the time required by the TCP approach to prioritize the target testset
-   - `python py/scalability.py <test_suite_size> <test_case_size> <algorithm>`
-   
-      For example, the command: `python py/scalability.py 1000 small FAST-pw` captures the time required by FAST-pw to prioritize a test suite containing 1000 small test cases. 
-   
-      To display all argument options simply run `python py/scalability.py`.
-   
-3. View output results stored in folder `scalability/output/`
- 
-### Plot the scalability results of our experiment execution
+    FAST_PRIVATE
+     .
+     |
+     |--- .github/workflows/        Holds this repository action.
+     |
+     |--- script/                   Implementation of the algorithms and scripts to execute the action.
+     |
+     |--- workflow_tempalte/        Holds the fast action template to be used in the others .yml files
+     
+ ## *Colaborators in the development of this action*
 
- 1. Run the script `plot-scalability-results.py`:
-    
-    - `python tools/plot-scalability-results.py <test_case_size> <time> <algorithm> ... <algorithm>`
-
-      `<time>` accepts two values, either *prioritization* or *total*, based on the way the prioritization time is measured.
-   
-      Example: `python tools/plot-scalability-results.py small prioritization FAST-pw FAST-one FAST-log`
- 
-      To display all argument options simply run `python py/scalability.py`.
-
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/mam81"><img src="https://avatars.githubusercontent.com/u/49957062?v=4" width="100px;" alt="Matheus Antunes"/><br /><sub><b>Matheus Antunes</b></sub></a><br /><a href="https://github.com/mam81"title="Frontend">
+    <td align="center"><a href="https://github.com/BigMilts"><img src="https://avatars.githubusercontent.com/u/51926931?v=4" width="100px;" alt="Milton Souto Maior"/><br /><sub><b>Milton Souto Maior</b></sub></a><br /><a href="https://github.com/BigMilts"title="Fullstack">
+	<td align="center"><a href="https://github.com/RafaelNAIP"><img src="https://avatars.githubusercontent.com/u/51056390?v=4" width="100px;" alt="Rafael Dias"/><br /><sub><b>Rafael Dias</b></sub></a><br /><a href="https://github.com/RafaelNAIP"title="Frontend">
+    <td align="center"><a href="https://github.com/vitorlms"><img src="https://avatars.githubusercontent.com/u/54985552?v=4" width="100px;" alt="Vítor Lopes"/><br /><sub><b>Vítor Lopes</b></sub></a><br /><a href="https://github.com/vitorlms"title="Frontend"></
+  </tr>
+</table>
