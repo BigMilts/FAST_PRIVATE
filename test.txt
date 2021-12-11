@@ -1,6 +1,0 @@
-sillySamples/exemploTest.java
-sillySamples/RateServiceTest.java
-sillySamples/SampleTest.java
-sillySamples/ItemServiceTest.java
-sillySamples/CustomerServiceTest.java
-
