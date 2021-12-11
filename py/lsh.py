@@ -18,7 +18,6 @@ along with this source.  If not, see <http://www.gnu.org/licenses/>.
 
 from collections import defaultdict
 from collections import OrderedDict
-import itertools
 
 import xxhash
 
@@ -26,7 +25,7 @@ import xxhash
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # SHINGLING
 
-def kShingles(TS, k):
+def k_shingles(TS, k):
     """INPUT
     (dict)TS: key=tcID, value=(set of entities)
     (int)k: size of k-shingles
@@ -47,14 +46,14 @@ def kShingles(TS, k):
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # MINWISEHASHING
 
-def hashFamily(i):
+def hash_family(i):
     def hashMember(x):
         return xxhash.xxh64(x, seed=37 * (2 * i + 1)).hexdigest()
 
     return hashMember
 
 
-def tcMinhashing(test_case, hash_functions):
+def tc_minhashing(test_case, hash_functions):
     """INPUT
     (pair)test_case: (tcID, set of entities)
     (list(fun))hash_functions: list of hash_functions
@@ -78,7 +77,7 @@ def tcMinhashing(test_case, hash_functions):
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # LOCALITY SENSITIVE HASHING (LSH)
 
-def LSHBucket(minhashes, b, r, n):
+def lsh_bucket(minhashes, b, r, n):
     """INPUT
     (dict)minhashes: key=minhashes of test cases
     (int)b: number of bands
@@ -87,7 +86,7 @@ def LSHBucket(minhashes, b, r, n):
 
     OUTPUT
     (dict(dict))LSHBuckets: key=band, val=dict(key=col_sig, val=set(tc_IDs))"""
-    assert(b * r == n)
+    assert (b * r == n)
 
     # key=band, val=dict(key=col_sig, val=set(tc_IDs))
     bucket = defaultdict(dict)
@@ -106,7 +105,7 @@ def LSHBucket(minhashes, b, r, n):
     return bucket
 
 
-def LSHCandidates(bucket, signature, b, r, n):
+def lsh_candidates(bucket, signature, b, r, n):
     """INPUT
     (dict)bucket: key=band, val=dict(key=col_sig, val=set(tc_IDs))
     (pair)signature: (0, minhash)
@@ -116,7 +115,7 @@ def LSHCandidates(bucket, signature, b, r, n):
 
     OUTPUT
     (set)candidates: set of possibly similar test cases"""
-    assert(b * r == n)
+    assert (b * r == n)
 
     candidates = set()
 
@@ -137,15 +136,18 @@ def LSHCandidates(bucket, signature, b, r, n):
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # JACCARD SIMILARITY/DISTANCE EXACT AND ESTIMATES
 
-def jSimilarity(a, b):
+def j_similarity(a, b):
     return float(len(a & b)) / len(a | b)
 
-def jDistance(a, b):
-    return 1.0 - jSimilarity(a, b)
 
-def jSimilarityEstimate(s1, s2):
-    assert(len(s1) == len(s2))
+def j_distance(a, b):
+    return 1.0 - j_similarity(a, b)
+
+
+def j_similarity_estimate(s1, s2):
+    assert (len(s1) == len(s2))
     return sum([1 for i in range(len(s1)) if s1[i] == s2[i]]) / float(len(s1))
 
-def jDistanceEstimate(s1, s2):
-    return 1.0 - jSimilarityEstimate(s1, s2)
+
+def j_distance_estimate(s1, s2):
+    return 1.0 - j_similarity_estimate(s1, s2)
