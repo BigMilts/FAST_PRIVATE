@@ -56,7 +56,7 @@ jobs:
         run: |
           git add results.txt
           git commit -m "persisting test data"
-          git push origin mai
+          git push origin main
 ```
 Nevertheless, if don't, you will need to create a folder a filte with this pattern: **.github/workflows/<your_action_name>.yml**. Then, you must put in the file
 
@@ -115,7 +115,7 @@ This is the root directory of the repository. The directory is structured as fol
      |
      |--- workflow_tempalte/        Holds the fast action template to be used in the others .yml files
      
- ## *Colaborators in the development of this action*
+ ## *Collaborators in the development of this action*
 
 <table>
   <tr>
