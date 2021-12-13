@@ -1,5 +1,6 @@
 # Fast github action
 
+### [Github Page](https://bigmilts.github.io/FAST_PRIVATE/)
 ### FAST Approaches to Scalable Similarity-based Test Case Prioritization
 
 This repository is a "fork" of https://github.com/brenomiranda/FAST.
@@ -56,9 +57,9 @@ jobs:
         run: |
           git add results.txt
           git commit -m "persisting test data"
-          git push origin main
+          git push
 ```
-Nevertheless, if don't, you will need to create a folder a filte with this pattern: **.github/workflows/<your_action_name>.yml**. Then, you must put in the file
+Nevertheless, if don't, you'll need to create a folder and a file with this pattern: **.github/workflows/<your_action_name>.yml**. Then, you must put in the file
 
 ```markdown
 
@@ -92,7 +93,7 @@ jobs:
         run: |
           git add results.txt
           git commit -m "commit messsage"
-          git push origin main
+          git push
 ```
 
 
@@ -119,9 +120,9 @@ This is the root directory of the repository. The directory is structured as fol
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/mam81"><img src="https://avatars.githubusercontent.com/u/49957062?v=4" width="100px;" alt="Matheus Antunes"/><br /><sub><b>Matheus Antunes</b></sub></a><br /><a href="https://github.com/mam81"title="Frontend">
-    <td align="center"><a href="https://github.com/BigMilts"><img src="https://avatars.githubusercontent.com/u/51926931?v=4" width="100px;" alt="Milton Souto Maior"/><br /><sub><b>Milton Souto Maior</b></sub></a><br /><a href="https://github.com/BigMilts"title="Fullstack">
-	<td align="center"><a href="https://github.com/RafaelNAIP"><img src="https://avatars.githubusercontent.com/u/51056390?v=4" width="100px;" alt="Rafael Dias"/><br /><sub><b>Rafael Dias</b></sub></a><br /><a href="https://github.com/RafaelNAIP"title="Frontend">
-    <td align="center"><a href="https://github.com/vitorlms"><img src="https://avatars.githubusercontent.com/u/54985552?v=4" width="100px;" alt="Vítor Lopes"/><br /><sub><b>Vítor Lopes</b></sub></a><br /><a href="https://github.com/vitorlms"title="Frontend"></
+    <td align="center"><a href="https://github.com/mam81"><img src="https://avatars.githubusercontent.com/u/49957062?v=4" width="100px;" alt="Matheus Antunes"/><br /><sub><b>Matheus Antunes</b></sub></a><br /><a href="https://github.com/mam81">
+    <td align="center"><a href="https://github.com/BigMilts"><img src="https://avatars.githubusercontent.com/u/51926931?v=4" width="100px;" alt="Milton Souto Maior"/><br /><sub><b>Milton Souto Maior</b></sub></a><br /><a href="https://github.com/BigMilts">
+	<td align="center"><a href="https://github.com/RafaelNAIP"><img src="https://avatars.githubusercontent.com/u/51056390?v=4" width="100px;" alt="Rafael Dias"/><br /><sub><b>Rafael Dias</b></sub></a><br /><a href="https://github.com/RafaelNAIP">
+    <td align="center"><a href="https://github.com/vitorlms"><img src="https://avatars.githubusercontent.com/u/54985552?v=4" width="100px;" alt="Vítor Lopes"/><br /><sub><b>Vítor Lopes</b></sub></a><br /><a href="https://github.com/vitorlms"></
   </tr>
 </table>
