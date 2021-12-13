@@ -24,4 +24,4 @@ jobs:
         run: |
           git add results.txt
           git commit -m "persisting test data"
-          git push origin main
+          git push
